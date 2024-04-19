@@ -1,27 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+import StarRating from "./StarRating";
+import EditMovie from "./EditMovie";
 
-const MovieCard = ({ movie }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
+const MovieCard = ({ movie, functionDelete, handleEdit }) => {
+  const { id, title, description, posterURL, rating } = movie;
 
   return (
-    <div
-      className="movie-card"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <img className="movie-poster" src={movie.posterURL} alt={movie.title} />
-      <div className={`movie-info ${isHovered ? "visible" : ""}`}>
-        <h2>{movie.title}</h2>
-        <p>{movie.description}</p>
-        <p>Rating: {movie.rating}</p>
+    <div className="movie-card">
+      <img src={posterURL} alt={title} />
+      <div>
+        <h2>{title}</h2>
+        <p>{description}</p>
+        <StarRating rating={rating} />
+        <button className="btn delete-btn" onClick={() => functionDelete(id)}>
+          Delete
+        </button>
+        <EditMovie handleEdit={handleEdit} movie={movie} />{" "}
       </div>
     </div>
   );

@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import StarRating from "./StarRating";
 
-const Filter = ({ handleFilterChange }) => {
+const Filter = ({ handleFilterChange, handleRatingChange, rating }) => {
+  const [searchTitle, setSearchTitle] = useState("");
+
+  const handleTitleChange = (e) => {
+    const title = e.target.value;
+    setSearchTitle(title);
+    handleFilterChange(title);
+  };
+
+  const handleRatingClick = (newRating) => {
+    handleRatingChange(newRating);
+    handleFilterChange(searchTitle, newRating);
+  };
+
   return (
     <div className="filter">
       <input
         type="text"
         placeholder="Search by title"
-        onChange={(e) => handleFilterChange(e.target.value)}
+        value={searchTitle}
+        onChange={handleTitleChange}
       />
-      <input
-        type="number"
-        placeholder="Filter by rating"
-        onChange={(e) => handleFilterChange(null, e.target.value)}
-      />
+      <StarRating rating={rating} onRatingChange={handleRatingClick} />
     </div>
   );
 };
